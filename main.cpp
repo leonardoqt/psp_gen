@@ -70,7 +70,10 @@ int main()
 	for(int t1=0; t1<num; t1++)
 	{
 		pp.get_abc(r0[t1]+0.2,zz);
-		pp.exceed(pow(1.5,t1));
+		if (t1 == 0)
+			pp.exceed(1.5);
+		else if (t1 == 2)
+			pp.exceed(2.25);
 		cout<<setw(5)<<NN<<setw(25)<<setprecision(15)<<scientific<<dh<<endl;
 		for(int t2=0; t2<NN; t2++)
 			cout<<setw(5)<<t2+1<<setw(25)<<setprecision(15)<<scientific<<r[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<psi[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<pp.V(r[t1][t2])<<endl;
