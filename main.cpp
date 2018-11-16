@@ -14,6 +14,7 @@ int main()
 	double *r0;
 	double **r, **v, **psi;
 	psp pp;
+	wfc ww;
 	string tmp;
 	stringstream ss;
 
@@ -66,22 +67,26 @@ int main()
 	for(int t1=0; t1<num; t1++)
 		cin>>r0[t1];
 
-	// start calculating psp
+	// start calculating wfc
 	for(int t1=0; t1<num; t1++)
 	{
-		pp.get_abc(r0[t1]+0.2,zz);
-		if (t1 == 0)
-			pp.exceed(1.5);
-		else if (t1 == 2)
-			pp.exceed(2.25);
+		ww.init(t1,NN,r[t1],psi[t1]);
+		ww.get_012(r0[t1]);
+		pp.get_abc_psi(ww.rc,ww.R0,ww.R1,ww.R2);
+		r0[t1] = ww.rc;
 		cout<<setw(5)<<NN<<setw(25)<<setprecision(15)<<scientific<<dh<<endl;
 		for(int t2=0; t2<NN; t2++)
-			cout<<setw(5)<<t2+1<<setw(25)<<setprecision(15)<<scientific<<r[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<psi[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<pp.V(r[t1][t2])<<endl;
+		{
+			if (r[t1][t2] <= ww.rc)
+				cout<<setw(5)<<t2+1<<setw(25)<<setprecision(15)<<scientific<<r[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<pp.psi(t1,r[t1][t2])<<setw(25)<<setprecision(15)<<scientific<<v[t1][t2]<<endl;
+			else
+				cout<<setw(5)<<t2+1<<setw(25)<<setprecision(15)<<scientific<<r[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<psi[t1][t2]<<setw(25)<<setprecision(15)<<scientific<<v[t1][t2]<<endl;
+		}
 	}
 
 	cout<<endl;
 	cout<<"########################################################"<<endl;
 	for(int t1=0; t1<num; t1++)
-		cout<<r0[t1]+0.2<<endl;
+		cout<<r0[t1]<<endl;
 	return 0;
 }
